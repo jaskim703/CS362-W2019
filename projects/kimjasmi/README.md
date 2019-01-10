@@ -1,2 +1,1 @@
-Jasmine Kim
-ONID : kimjasmi
+This is my assignment-1 submission!
