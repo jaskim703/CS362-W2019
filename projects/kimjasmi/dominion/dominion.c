@@ -1099,7 +1099,8 @@ int adventurer_card(struct gameState *state)
 
   int z = 0;	// this is the counter for the temp hand
 
-  while(drawntreasure<2){
+  //Bug #1 : Player will reveal cards from deck until 1 Treasure card is revealed (normally 2 Treasure cards)
+  while(drawntreasure<1){
 	if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
 	  shuffle(currentPlayer, state);
 	}
@@ -1127,8 +1128,8 @@ int smithy_card(struct gameState *state, int handPos)
 	int currentPlayer = whoseTurn(state);
 	int i;
 
-	//+3 Cards
-      for (i = 0; i < 3; i++)
+      //Bug #2 : Player will draw 4 cards rather than the original 3 cards 
+      for (i = 0; i < 4; i++)
 	{
 	  drawCard(currentPlayer, state);
 	}
@@ -1150,7 +1151,8 @@ int village_card(struct gameState *state, int handPos)
       state->numActions = state->numActions + 2;
 			
       //discard played card from hand
-      discardCard(handPos, currentPlayer, state, 0);
+      //Bug #3 : This bug will change the value of trashFlag from 0 to 1 to incorrectly run discardCard
+      discardCard(handPos, currentPlayer, state, 1);
       return 0;
 
 }
@@ -1196,7 +1198,9 @@ int feast_card(int choice1, struct gameState *state)
 	    printf("Deck Count: %d\n", state->handCount[currentPlayer] + state->deckCount[currentPlayer] + state->discardCount[currentPlayer]);
 	  }
 
-	  gainCard(choice1, state, 0, currentPlayer);//Gain the card
+	  //Bug #4 : This bug will set the toFlag value from 0 to 1. Instead of adding card to discard, the card will
+	  //be added to the deck
+	  gainCard(choice1, state, 1, currentPlayer);//Gain the card
 	  x = 0;//No more buying cards
 
 	  if (DEBUG){
