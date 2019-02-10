@@ -1,0 +1,82 @@
+        -:    0:Source:cardtest2.c
+        -:    0:Graph:cardtest2.gcno
+        -:    0:Data:cardtest2.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/******************************************
+        -:    2:* Author: Jasmine Kim
+        -:    3:* Date: 2-6-19
+        -:    4:* Assignment: cardtest2.c tests the smithy
+        -:    5:* card
+        -:    6:********************************************/
+        -:    7:
+        -:    8:#include "dominion.h"
+        -:    9:#include "dominion_helpers.h"
+        -:   10:#include <string.h>
+        -:   11:#include <stdio.h>
+        -:   12:#include <assert.h>
+        -:   13:#include "rngs.h"
+        -:   14:
+function main called 1 returned 100% blocks executed 75%
+        1:   15:int main()
+        -:   16:{
+        1:   17:    int seed = 1000;
+        1:   18:    int numPlayers = 2;
+        1:   19:    int false = 0;
+        1:   20:       int thisPlayer = 0;
+        -:   21:    struct gameState G, testG;
+        1:   22:    int k[10] = {adventurer, council_room, feast, gardens, mine,
+        -:   23:                remodel, smithy, village, baron, great_hall};
+        -:   24:
+        1:   25:    printf("TESTING smithy_card():\n");
+call    0 returned 100%
+        -:   26:
+        1:   27:    initializeGame(numPlayers, k, seed, &G);
+call    0 returned 100%
+        1:   28:    memcpy(&testG, &G, sizeof(struct gameState));
+        -:   29:
+        1:   30:    testG.hand[thisPlayer][testG.handCount[thisPlayer]] = smithy;
+        1:   31:    testG.handCount[thisPlayer]++;
+        1:   32:    if (G.handCount[thisPlayer] + 1 == testG.handCount[thisPlayer])
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        1:   33:        printf("Test passed! The Smithy card has been drawn.\n");
+call    0 returned 100%
+        -:   34:    else
+        -:   35:    {
+    #####:   36:        printf("Test failed. The Smithy card has not been drawn.\n");
+call    0 never executed
+    #####:   37:        false = 1;
+        -:   38:    }
+        -:   39:
+        -:   40:
+        1:   41:    cardEffect(smithy, 0, 0, 0, &testG,
+call    0 returned 100%
+        1:   42:            testG.hand[thisPlayer][testG.handCount[thisPlayer]-1], 0);
+        -:   43:
+        1:   44:    if (G.handCount[thisPlayer] + 3 == testG.handCount[thisPlayer])
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   45:        printf("Test passed! The current player has drawn 3 new cards.\n");
+call    0 never executed
+        -:   46:    else
+        -:   47:    {
+        1:   48:        printf("Test failed. The current player has not drawn 3 cards.\n");
+call    0 returned 100%
+        1:   49:        false = 1;
+        -:   50:    }
+        -:   51:
+        1:   52:    if(false==0)
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+        -:   53:    {
+    #####:   54:        printf("Congrats! Tests passed!\n\n");
+call    0 never executed
+        -:   55:    }
+        -:   56:    else
+        -:   57:    {
+        1:   58:        printf("Tests failed. Please review.\n\n");
+call    0 returned 100%
+        -:   59:    }
+        1:   60:    return 0;
+        -:   61:}

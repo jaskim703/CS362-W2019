@@ -1,0 +1,145 @@
+        -:    0:Source:unittest2.c
+        -:    0:Graph:unittest2.gcno
+        -:    0:Data:unittest2.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/******************************************
+        -:    2:* Author: Jasmine Kim
+        -:    3:* Date: 2-6-19
+        -:    4:* Assignment: unittest2.c tests the updateCoins
+        -:    5:* function
+        -:    6:********************************************/
+        -:    7:
+        -:    8:#include "dominion.h"
+        -:    9:#include "dominion_helpers.h"
+        -:   10:#include "rngs.h"
+        -:   11:#include <string.h>
+        -:   12:#include <stdio.h>
+        -:   13:#include <math.h>
+        -:   14:#include <stdlib.h>
+        -:   15:#include <assert.h>
+        -:   16:
+        -:   17://Tests the updateCoins function
+function main called 1 returned 100% blocks executed 80%
+        1:   18:int main()
+        -:   19:{
+        -:   20:    int i;
+        1:   21:    int numTest = 1;
+        1:   22:    int seed = 1000;
+        1:   23:    int numPlayer = 2;
+        -:   24:    int bonus;
+        1:   25:    int false = 0;
+        1:   26:    int maxBonus = 10;
+        -:   27:    struct gameState G;
+        1:   28:    int k[10] = {adventurer, council_room, feast, gardens, mine,
+        -:   29:                remodel, smithy, village, baron, great_hall};
+        -:   30:
+        -:   31:    int coppers[MAX_HAND];
+        -:   32:    int silvers[MAX_HAND];
+        -:   33:    int golds[MAX_HAND];
+        -:   34:    int p, handCount;
+        1:   35:    int maxHandCount = 5;
+        -:   36:
+      501:   37:    for(i = 0; i < MAX_HAND; i++)
+branch  0 taken 99%
+branch  1 taken 1% (fallthrough)
+        -:   38:    {
+      500:   39:        coppers[i] = copper;
+      500:   40:        silvers[i] = silver;
+      500:   41:        golds[i] = gold;
+        -:   42:    }
+        -:   43:
+        1:   44:    printf("TESTING updateCoins():\n");
+call    0 returned 100%
+        -:   45:
+        3:   46:    for(p = 0; p < numPlayer; p++)
+branch  0 taken 67%
+branch  1 taken 33% (fallthrough)
+        -:   47:    {
+       12:   48:        for(handCount = 1; handCount <= maxHandCount; handCount++)
+branch  0 taken 83%
+branch  1 taken 17% (fallthrough)
+        -:   49:        {
+      120:   50:            for(bonus = 0; bonus <= maxBonus; bonus++)
+branch  0 taken 92%
+branch  1 taken 8% (fallthrough)
+        -:   51:            {
+      110:   52:                printf("Test player %d with %d treasure card(s) and %d bonus.\n", p, handCount, bonus);
+call    0 returned 100%
+        -:   53:
+      110:   54:                memset(&G, 23, sizeof(struct gameState));
+      110:   55:                initializeGame(numPlayer, k, seed, &G);
+call    0 returned 100%
+      110:   56:                G.handCount[p] = handCount;
+        -:   57:
+      110:   58:                memcpy(G.hand[p], coppers, sizeof(int) * handCount); // set all the cards to copper
+      110:   59:                updateCoins(p, &G, bonus);
+call    0 returned 100%
+        -:   60:
+      110:   61:                if(G.coins == handCount*1 + bonus)  //acts as our assert function
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        -:   62:                {
+      110:   63:                    printf("Test %d passed! G.coins = %d, expected: %d\n", numTest++, G.coins, handCount * 1 + bonus);
+call    0 returned 100%
+        -:   64:                }
+        -:   65:                else
+        -:   66:                {
+    #####:   67:                    printf("Test %d failed! G.coins = %d, expected: %d\n", numTest++, G.coins, handCount * 1 + bonus);
+call    0 never executed
+    #####:   68:                    false = 1;
+        -:   69:                }
+        -:   70:
+      110:   71:                memcpy(G.hand[p], silvers, sizeof(int) * handCount); // set all the cards to silver
+      110:   72:                updateCoins(p, &G, bonus);
+call    0 returned 100%
+        -:   73:
+      110:   74:                if(G.coins == handCount * 2 + bonus)  //acts as our assert function
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        -:   75:                {
+      110:   76:                    printf("Test %d passed! G.coins = %d, expected: %d\n", numTest++, G.coins, handCount * 2 + bonus);
+call    0 returned 100%
+        -:   77:                }
+        -:   78:                else
+        -:   79:                {
+    #####:   80:                    printf("Test %d failed! G.coins = %d, expected: %d\n", numTest++, G.coins, handCount * 2 + bonus);
+call    0 never executed
+    #####:   81:                    false = 1;
+        -:   82:                }
+        -:   83:
+      110:   84:                memcpy(G.hand[p], golds, sizeof(int) * handCount); // set all the cards to gold
+      110:   85:                updateCoins(p, &G, bonus);
+call    0 returned 100%
+        -:   86:
+      110:   87:                if(G.coins == handCount * 3 + bonus)  //acts as our assert function
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        -:   88:                {
+      110:   89:                    printf("Test %d passed! G.coins = %d, expected: %d\n", numTest++, G.coins, handCount * 3 + bonus);
+call    0 returned 100%
+        -:   90:                }
+        -:   91:                else
+        -:   92:                {
+    #####:   93:                    printf("Test %d failed! G.coins = %d, expected: %d\n", numTest++, G.coins, handCount * 3 + bonus);
+call    0 never executed
+    #####:   94:                    false = 1;
+        -:   95:                }
+        -:   96:            }
+        -:   97:        }
+        -:   98:    }
+        -:   99:
+        1:  100:    if(false == 0)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        -:  101:    {
+        1:  102:        printf("All tests passed!\n");
+call    0 returned 100%
+        -:  103:    }
+        -:  104:    else
+        -:  105:    {
+    #####:  106:        printf("Tests failed. Please review.\n");
+call    0 never executed
+        -:  107:    }
+        1:  108:    return 0;
+        -:  109:}
