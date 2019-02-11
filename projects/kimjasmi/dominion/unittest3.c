@@ -58,6 +58,7 @@ int main()
     G.supplyCount[province] = 8;   //number of province cards when there are 2 players
     for(i = 0; i < 3; i++)
     {
+	//set supply count to 0
         G.supplyCount[i] = 0;
 
         if (isGameOver(&G) && i == 2)

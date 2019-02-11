@@ -25,6 +25,7 @@ int main()
 
     printf("TESTING whoseTurn() function.\n");
 
+    //Tested function for 5 turns, will print if passed for each turn
     for(i = 0; i < 5; i++)
     {
         G.whoseTurn = x;

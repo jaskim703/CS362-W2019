@@ -34,6 +34,7 @@ int main()
     int p, handCount;
     int maxHandCount = 5;
 
+    //Fills the array with the corresponding coins
     for(i = 0; i < MAX_HAND; i++)
     {
         coppers[i] = copper;
@@ -57,8 +58,8 @@ int main()
 
                 memcpy(G.hand[p], coppers, sizeof(int) * handCount); // set all the cards to copper
                 updateCoins(p, &G, bonus);
-
-                if(G.coins == handCount*1 + bonus)  //acts as our assert function
+		//Tests for count of copper coins
+                if(G.coins == handCount * 1 + bonus)  //acts as our assert function
                 {
                     printf("Test %d passed! G.coins = %d, expected: %d\n", numTest++, G.coins, handCount * 1 + bonus);
                 }
@@ -70,7 +71,7 @@ int main()
 
                 memcpy(G.hand[p], silvers, sizeof(int) * handCount); // set all the cards to silver
                 updateCoins(p, &G, bonus);
-
+		//Tests for count of silver coins
                 if(G.coins == handCount * 2 + bonus)  //acts as our assert function
                 {
                     printf("Test %d passed! G.coins = %d, expected: %d\n", numTest++, G.coins, handCount * 2 + bonus);
@@ -83,7 +84,7 @@ int main()
 
                 memcpy(G.hand[p], golds, sizeof(int) * handCount); // set all the cards to gold
                 updateCoins(p, &G, bonus);
-
+		//Tests for count of gold coins
                 if(G.coins == handCount * 3 + bonus)  //acts as our assert function
                 {
                     printf("Test %d passed! G.coins = %d, expected: %d\n", numTest++, G.coins, handCount * 3 + bonus);

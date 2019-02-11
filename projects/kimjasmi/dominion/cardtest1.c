@@ -19,10 +19,10 @@ int main()
     int seed = 1000;
     int numPlayers = 2;
     int thisPlayer = 0;
-    int cardDrawn1;
-    int cardDrawn2;
-    int finalCount = 0;
-    int originalCount = 0;
+    int card1;
+    int card2;
+    int endCount = 0;
+    int startCount = 0;
     struct gameState G, testG;
     int k[10] = {adventurer, council_room, feast, gardens, mine,
                 remodel, smithy, village, baron, great_hall};
@@ -32,6 +32,7 @@ int main()
     initializeGame(numPlayers, k, seed, &G);
     memcpy(&testG, &G, sizeof(struct gameState));
     
+    //Tests that the player received the adventurer card
     testG.hand[thisPlayer][testG.handCount[thisPlayer]] = adventurer;
     testG.handCount[thisPlayer]++;
     if(G.handCount[thisPlayer]+ 1 == testG.handCount[thisPlayer])
@@ -46,10 +47,11 @@ int main()
     
     cardEffect(adventurer, 0, 0, 0, &testG, testG.hand[thisPlayer][testG.handCount[thisPlayer]-1], 0);
     
+    //Tests for how many treasure cards are drawn
     for(i=0; i < testG.handCount[thisPlayer]; i++)
     {
-        cardDrawn1 = testG.hand[thisPlayer][i];
-        if(cardDrawn1 == copper || cardDrawn1 == silver || cardDrawn1 == gold)
+        card1 = testG.hand[thisPlayer][i];
+        if(card1 == copper || card1 == silver || card1 == gold)
         {
             finalCount++;
         }
@@ -57,16 +59,17 @@ int main()
     
     for(i=0; i < G.handCount[thisPlayer]; i++)
     {
-        cardDrawn2 = G.hand[thisPlayer][i];
-        if(cardDrawn2 == copper || cardDrawn2 == silver || cardDrawn2 == gold)
+        card2 = G.hand[thisPlayer][i];
+        if(card2 == copper || card2 == silver || card2 == gold)
         {
             originalCount++;
         }
     }
     
-    if((finalCount - originalCount) > 0 || (finalCount - originalCount) < 3)
+    //Test to make sure the correct amount of treasure cards were drawn
+    if((endCount - startCount) > 0 || (endCount - startCount) < 3)
     {
-        printf("Test passed! %d treasure cards were drawn!\n", (finalCount-originalCount));
+        printf("Test passed! %d treasure cards were drawn!\n", (endCount-startCount));
     }
     else{
         printf("Test failed. Not enough or too many treasure cards drawn.\n");
@@ -83,6 +86,7 @@ int main()
         false = 1;
     }
         
+    //Tests to make sure all tests pass. If not, the program asks user to review
     if(false==0)
     {
         printf("Congrats! Tests passed!\n\n");
