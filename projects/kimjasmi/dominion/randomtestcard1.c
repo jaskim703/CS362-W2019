@@ -45,17 +45,21 @@ int main()
     for(i=0; i < ITERATIONS; i++)
     {
         initializeGame(numPlayers, k, seed, &G);
+
+	//set random deck size and hand size
         deckSize = rand() % (MAX_DECK + 1);
         handSize = rand() % (deckSize + 1);
 
         G.deckCount[0] = deckSize - handSize;
         G.handCount[0] = handSize;
 
+	//sets the position of the card in the players hand
         handPos = G.hand[currentPlayer][G.handCount[currentPlayer] - 1];
         prevDeck = G.deckCount[0];
         prevHand = G.handCount[0];
         discardBefore = G.playedCardCount;
-
+	
+	//plays the smithy card
          cardEffect(smithy, 0, 0, 0, &G,
             G.hand[currentPlayer][G.handCount[currentPlayer]-1], 0);
 
@@ -65,7 +69,7 @@ int main()
 
         false = 0;
 
-
+	//tests for correct number of cards drawn
         if(afterHand != (prevHand + 2)){
             printf("Test fail - number of cards drawn incorrect\n");
             handFail++;

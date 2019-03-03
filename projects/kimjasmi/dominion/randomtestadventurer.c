@@ -44,11 +44,15 @@ int main()
     srand(time(NULL));
     for(i=0; i < ITERATIONS; i++)
     {
+	//initialize the game 
         initializeGame(numPlayers, k, seed, &G);
         prevTreasureCount = 0;
+
+	//randomize the size of the deck and the size of the hand 
         deckSize = rand() % (MAX_DECK + 1);
         handSize = rand() % (deckSize + 1);
         
+	//set the deck count as deck size minus the hand size
         G.deckCount[0] = deckSize - handSize;
         G.handCount[0] = handSize;
         
@@ -56,6 +60,7 @@ int main()
         {
             for(q=0; q<G.deckCount[j]; q++)
             {
+		//usually about 50 cards in a deck, so choose randomly from 50 to give card values
                 randomCard = rand() % (50+1);
                 randQ = rand() % (10);
                 if(randomCard == 1)
@@ -71,6 +76,7 @@ int main()
             }
         }
         
+	//counts the treasure cards before playing adventurer card
         for(m=0; m< G.handCount[currentPlayer]; m++)
         {
             if(G.hand[currentPlayer][m]==copper || G.hand[currentPlayer][m]==silver|| G.hand[currentPlayer][m]==gold)
@@ -83,6 +89,7 @@ int main()
         
         treasureCount = 0;
         
+	//counts treasure cards after playing adventurer card
          for(m=0; m< G.handCount[currentPlayer]; m++)
         {
             if(G.hand[currentPlayer][m]==copper || G.hand[currentPlayer][m]==silver|| G.hand[currentPlayer][m]==gold)
