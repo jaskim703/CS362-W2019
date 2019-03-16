@@ -1,0 +1,101 @@
+        -:    0:Source:cardtest3.c
+        -:    0:Graph:cardtest3.gcno
+        -:    0:Data:cardtest3.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/******************************************
+        -:    2:* Author: Jasmine Kim
+        -:    3:* Date: 2-6-19
+        -:    4:* Assignment: cardtest3.c tests the village
+        -:    5:* card
+        -:    6:********************************************/
+        -:    7:
+        -:    8:#include "dominion.h"
+        -:    9:#include "dominion_helpers.h"
+        -:   10:#include <string.h>
+        -:   11:#include <stdio.h>
+        -:   12:#include <assert.h>
+        -:   13:#include "rngs.h"
+        -:   14:
+function main called 1 returned 100% blocks executed 70%
+        1:   15:int main()
+        -:   16:{
+        1:   17:    int seed = 1000;
+        1:   18:    int numPlayers = 2;
+        1:   19:    int thisPlayer = 0;
+        1:   20:    int false = 0;
+        -:   21:    struct gameState G, testG;
+        1:   22:    int k[10] = {adventurer, council_room, feast, gardens, mine,
+        -:   23:                remodel, smithy, village, baron, great_hall};
+        -:   24:
+        1:   25:    printf("TESTING village_card():\n");
+call    0 returned 100%
+        -:   26:
+        -:   27:    //initialize the game
+        1:   28:    initializeGame(numPlayers, k, seed, &G);
+call    0 returned 100%
+        1:   29:    memcpy(&testG, &G, sizeof(struct gameState));
+        -:   30:
+        -:   31:    //Test to make sure the card is in the hand
+        1:   32:    testG.hand[thisPlayer][testG.handCount[thisPlayer]] = village;
+        1:   33:    testG.handCount[thisPlayer]++;
+        1:   34:    if (G.handCount[thisPlayer] + 1 == testG.handCount[thisPlayer])
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        1:   35:        printf("Test passed! The Village card has been drawn.\n");
+call    0 returned 100%
+        -:   36:    else
+        -:   37:    {
+    #####:   38:        printf("Test failed. The Village card has not been drawn.\n");
+call    0 never executed
+    #####:   39:        false = 1;
+        -:   40:    }
+        -:   41:
+        -:   42:    //Calling the village_card to be played to test
+        1:   43:    cardEffect(village, 0, 0, 0, &testG,
+call    0 returned 100%
+        1:   44:            testG.hand[thisPlayer][testG.handCount[thisPlayer]-1], 0);
+        -:   45:
+        -:   46:    //Tests for 1 card drawn
+        1:   47:    if (G.handCount[thisPlayer] + 1 == testG.handCount[thisPlayer])
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        1:   48:        printf("Test passed! The current player has drawn a new card.\n");
+call    0 returned 100%
+        -:   49:    else
+        -:   50:    {
+    #####:   51:        printf("Test failed. The current player has not drawn a new card.\n");
+call    0 never executed
+    #####:   52:        false = 1;
+        -:   53:    }
+        -:   54:
+        -:   55:    //Tests for adding 2 actions 
+        1:   56:    if (G.numActions + 2 == testG.numActions)
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+        -:   57:    {
+    #####:   58:        printf("Test passed! The current player has +2 actions.\n");
+call    0 never executed
+        -:   59:    }
+        -:   60:    else
+        -:   61:    {
+        1:   62:        printf("Test failed. The current player did not get +2 actions.\n");
+call    0 returned 100%
+        1:   63:        false = 1;
+        -:   64:    }
+        -:   65: 
+        -:   66:    //If all tests pass, will say passed. If any test fails, the program will ask user to review.
+        1:   67:    if(false==0)
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+        -:   68:    {
+    #####:   69:        printf("Congrats! Tests passed!\n\n");
+call    0 never executed
+        -:   70:    }
+        -:   71:    else
+        -:   72:    {
+        1:   73:        printf("Tests failed. Please review.\n\n");
+call    0 returned 100%
+        -:   74:    }
+        1:   75:    return 0;
+        -:   76:}

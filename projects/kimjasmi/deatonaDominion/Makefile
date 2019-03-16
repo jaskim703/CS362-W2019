@@ -47,10 +47,10 @@ randomtestcard1: randomtestcard1.c dominion.o rngs.o
 randomtests: randomtestadventurer randomtestcard1
 
 cardtest1: cardtest1.c dominion.o rngs.o
-	gcc -o cardtest1 -g cardtest1.c dominion.o rngs.o $(CFLAGS)
+	gcc -g -o cardtest1 -g cardtest1.c dominion.o rngs.o $(CFLAGS)
 
 cardtest2: cardtest2.c dominion.o rngs.o
-	gcc -o cardtest2 -g cardtest2.c dominion.o rngs.o $(CFLAGS)
+	gcc -g -o cardtest2 -g cardtest2.c dominion.o rngs.o $(CFLAGS)
 
 cardtest3: cardtest3.c dominion.o rngs.o
 	gcc -o cardtest3 -g cardtest3.c dominion.o rngs.o $(CFLAGS)
@@ -103,7 +103,7 @@ unittestresults: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 car
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
-all: playdom player 
+all: playdom player tests randomtests unittestresults
 
 clean:
 	rm -f *.o playdom.exe playdom player player.exe unittest1 unittest1.exe unittest2 unittest2.exe unittest3 unittest3.exe unittest4 unittest4.exe cardtest1 cardtest1.exe cardtest2 cardtest2.exe cardtest3 cardtest3.exe unittestresults.out randomtestadventurer randomtestadventurer.exe randomtestcard1 randomtestcard1.exe randomtestadventurer.out randomtestcard1.out *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe

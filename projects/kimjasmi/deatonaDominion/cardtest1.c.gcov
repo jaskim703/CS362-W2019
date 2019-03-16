@@ -1,0 +1,142 @@
+        -:    0:Source:cardtest1.c
+        -:    0:Graph:cardtest1.gcno
+        -:    0:Data:cardtest1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/******************************************
+        -:    2:* Author: Jasmine Kim
+        -:    3:* Date: 2-6-19
+        -:    4:* Assignment: cardtest1.c tests the adventurer
+        -:    5:* card 
+        -:    6:********************************************/
+        -:    7:
+        -:    8:#include "dominion.h"
+        -:    9:#include "dominion_helpers.h"
+        -:   10:#include <string.h>
+        -:   11:#include <stdio.h>
+        -:   12:#include <assert.h>
+        -:   13:#include "rngs.h"
+        -:   14:
+function main called 1 returned 100% blocks executed 80%
+        1:   15:int main()
+        -:   16:{
+        -:   17:    int i;
+        1:   18:    int false = 0;
+        1:   19:    int seed = 1000;
+        1:   20:    int numPlayers = 2;
+        1:   21:    int thisPlayer = 0;
+        -:   22:    int card1;
+        -:   23:    int card2;
+        1:   24:    int endCount = 0;
+        1:   25:    int startCount = 0;
+        -:   26:    struct gameState G, testG;
+        1:   27:    int k[10] = {adventurer, council_room, feast, gardens, mine,
+        -:   28:                remodel, smithy, village, baron, great_hall};
+        -:   29:    
+        1:   30:    printf("TESTING adventurer_card():\n");
+call    0 returned 100%
+        -:   31:    
+        1:   32:    initializeGame(numPlayers, k, seed, &G);
+call    0 returned 100%
+        1:   33:    memcpy(&testG, &G, sizeof(struct gameState));
+        -:   34:    
+        -:   35:    //Tests that the player received the adventurer card
+        1:   36:    testG.hand[thisPlayer][testG.handCount[thisPlayer]] = adventurer;
+        1:   37:    testG.handCount[thisPlayer]++;
+        1:   38:    if(G.handCount[thisPlayer]+ 1 == testG.handCount[thisPlayer])
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        -:   39:    {
+        1:   40:        printf("Test passed. The Adventurer card has been drawn.\n");
+call    0 returned 100%
+        -:   41:    }
+        -:   42:    else
+        -:   43:    {
+    #####:   44:        printf("Test failed. The Adventurer card has not been drawn.\n");
+call    0 never executed
+    #####:   45:        false = 1;
+        -:   46:    }
+        -:   47:    
+        1:   48:    cardEffect(adventurer, 0, 0, 0, &testG, testG.hand[thisPlayer][testG.handCount[thisPlayer]-1], 0);
+call    0 returned 100%
+        -:   49:    
+        -:   50:    //Tests for how many treasure cards are drawn
+        9:   51:    for(i=0; i < testG.handCount[thisPlayer]; i++)
+branch  0 taken 89%
+branch  1 taken 11% (fallthrough)
+        -:   52:    {
+        8:   53:        card1 = testG.hand[thisPlayer][i];
+        8:   54:        if(card1 == copper || card1 == silver || card1 == gold)
+branch  0 taken 25% (fallthrough)
+branch  1 taken 75%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0%
+branch  4 taken 0% (fallthrough)
+branch  5 taken 100%
+        -:   55:        {
+        6:   56:            endCount++;
+        -:   57:        }
+        -:   58:    }
+        -:   59:    
+        6:   60:    for(i=0; i < G.handCount[thisPlayer]; i++)
+branch  0 taken 83%
+branch  1 taken 17% (fallthrough)
+        -:   61:    {
+        5:   62:        card2 = G.hand[thisPlayer][i];
+        5:   63:        if(card2 == copper || card2 == silver || card2 == gold)
+branch  0 taken 20% (fallthrough)
+branch  1 taken 80%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0%
+branch  4 taken 0% (fallthrough)
+branch  5 taken 100%
+        -:   64:        {
+        4:   65:            startCount++;
+        -:   66:        }
+        -:   67:    }
+        -:   68:    
+        -:   69:    //Test to make sure the correct amount of treasure cards were drawn
+        1:   70:    if(((endCount - startCount) > 0) && ((endCount - startCount) < 3))
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0%
+        -:   71:    {
+        1:   72:        printf("Test passed! %d treasure cards were drawn!\n", (endCount-startCount));
+call    0 returned 100%
+        -:   73:    }
+        -:   74:    else{
+    #####:   75:        printf("Test failed. %d treasure cards. Not enough or too many drawn.\n", (endCount-startCount));
+call    0 never executed
+    #####:   76:        false = 1;
+        -:   77:    }
+        -:   78:    
+        1:   79:    if (G.handCount[thisPlayer] < testG.handCount[thisPlayer])
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        -:   80:    {
+        1:   81:        printf("Test passed! Cards were added to the hand.\n");
+call    0 returned 100%
+        -:   82:    }
+        -:   83:    else
+        -:   84:    {
+    #####:   85:        printf("Test failed. Cards were not added to the hand.\n");
+call    0 never executed
+    #####:   86:        false = 1;
+        -:   87:    }
+        -:   88:        
+        -:   89:    //Tests to make sure all tests pass. If not, the program asks user to review
+        1:   90:    if(false==0)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        -:   91:    {
+        1:   92:        printf("Congrats! Tests passed!\n\n");
+call    0 returned 100%
+        -:   93:    }
+        -:   94:    else
+        -:   95:    {
+    #####:   96:        printf("Tests failed. Please review.\n\n");
+call    0 never executed
+        -:   97:    }
+        1:   98:    return 0;
+        -:   99:}

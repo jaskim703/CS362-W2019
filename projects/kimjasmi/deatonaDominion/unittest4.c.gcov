@@ -1,0 +1,102 @@
+        -:    0:Source:unittest4.c
+        -:    0:Graph:unittest4.gcno
+        -:    0:Data:unittest4.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/******************************************
+        -:    2:* Author: Jasmine Kim
+        -:    3:* Date: 2-6-19
+        -:    4:* Assignment: unittest4.c tests the buyCard
+        -:    5:* function
+        -:    6:********************************************/
+        -:    7:
+        -:    8:#include "dominion.h"
+        -:    9:#include "dominion_helpers.h"
+        -:   10:#include "rngs.h"
+        -:   11:#include <string.h>
+        -:   12:#include <stdio.h>
+        -:   13:#include <math.h>
+        -:   14:#include <stdlib.h>
+        -:   15:#include <assert.h>
+        -:   16:
+        -:   17://Tests the buyCard function
+function main called 1 returned 100% blocks executed 73%
+        1:   18:int main()
+        -:   19:{
+        -:   20:    struct gameState G;
+        1:   21:    int false = 0;
+        -:   22:
+        1:   23:     printf("TESTING buyCard() function.\n");
+call    0 returned 100%
+        -:   24:
+        -:   25:     //Set number of buys and coins
+        1:   26:     G.numBuys = 2;
+        1:   27:     G.coins = 2;
+        1:   28:     printf("Test to see if enough coins\n");
+call    0 returned 100%
+        1:   29:     int x = buyCard(2, &G);
+call    0 returned 100%
+        1:   30:     if(x == -1)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        -:   31:     {
+        1:   32:         printf("Test passed! Not enough coins\n");
+call    0 returned 100%
+        -:   33:     }
+        -:   34:     else
+        -:   35:     {
+    #####:   36:         printf("Test failed. Recheck number of coins\n");
+call    0 never executed
+    #####:   37:         false = 1;
+        -:   38:     }
+        -:   39:
+        -:   40:     //Test to see if we can buy the card we want
+        1:   41:     G.coins = 8;
+        1:   42:     x = buyCard(2, &G);
+call    0 returned 100%
+        1:   43:     if (x == 0)
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+        -:   44:     {
+    #####:   45:         printf("Test passed! Card of choice can be bought\n");
+call    0 never executed
+        -:   46:     }
+        -:   47:     else
+        -:   48:     {
+        1:   49:         printf("Test failed. Unable to purchase card\n");
+call    0 returned 100%
+        1:   50:         false = 1;
+        -:   51:     }
+        -:   52:
+        -:   53:     //Test for remaining number of buys
+        1:   54:     x = buyCard(2, &G);
+call    0 returned 100%
+        1:   55:     if(x == -1)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        -:   56:     {
+        1:   57:         printf("Test passed! No remaining buys\n");
+call    0 returned 100%
+        -:   58:     }
+        -:   59:     else
+        -:   60:     {
+    #####:   61:         printf("Test failed. There are buys remaining\n");
+call    0 never executed
+    #####:   62:         false = 1;
+        -:   63:     }
+        -:   64:
+        1:   65:     if(false == 0)
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+        -:   66:    {
+    #####:   67:        printf("All tests passed!\n");
+call    0 never executed
+        -:   68:    }
+        -:   69:    else
+        -:   70:    {
+        1:   71:        printf("Tests failed. Please review.\n");
+call    0 returned 100%
+        -:   72:    }
+        1:   73:    return 0;
+        -:   74:
+        -:   75:}

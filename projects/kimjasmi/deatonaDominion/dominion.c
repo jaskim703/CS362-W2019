@@ -646,7 +646,7 @@ int getCost(int cardNumber)
 void adventurerF(int z, int drawntreasure, int currentPlayer, struct gameState *state){
 	int cardDrawn;
 	int temphand[MAX_HAND];
-      while(drawntreasure<3){
+      while(drawntreasure<2){
 	if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
 	  shuffle(currentPlayer, state);
 	}
@@ -694,7 +694,7 @@ void council_roomF(int currentPlayer, struct gameState *state, int handPos){
 void smithyF(int currentPlayer, struct gameState *state, int handPos){
       //+3 Cards
       int i;
-      for (i = 0; i < 2; i++)
+      for (i = 0; i < 3; i++)
 	{
 	  drawCard(currentPlayer, state);
 	}
